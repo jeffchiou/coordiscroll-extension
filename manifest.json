@@ -12,7 +12,8 @@
   ],
   "browser_action": {
     "default_icon": "icons/coordiscroll-icon_32.png",
-    "default_title": "CoordiScrcoll"    
+    "default_title": "CoordiScroll",
+    "default_popup": "button-ui.html"
   },
   "background": {
     "scripts": ["coordi-background.js"]
