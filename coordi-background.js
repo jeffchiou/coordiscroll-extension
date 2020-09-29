@@ -1,6 +1,7 @@
 let ports = []
 let State = {
   tabId: new Map(),
+  syncedTabs: new Set(),
   x: [],
   y: [],
   dx: [],
@@ -9,8 +10,10 @@ let State = {
 
 
 function connected(p) { 
+
   let currentTab = p.sender.tab.id
   ports[currentTab] = p
+
   ports[currentTab].onMessage.addListener(function(m) {
     if (!State.tabId.has(currentTab)) { 
       State.tabId.set(currentTab, State.tabId.size)
@@ -29,7 +32,9 @@ function connected(p) {
         })
       }
     }
+
   })
+
 }
 
 browser.runtime.onConnect.addListener(connected)
