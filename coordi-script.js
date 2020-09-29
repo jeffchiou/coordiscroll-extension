@@ -7,8 +7,12 @@ myPort.onMessage.addListener(function(m) {
     // console.log("In content script, received message from background script: ")
     // console.log(m.x, m.y)
     window.removeEventListener('scroll', scrollListener)
-    window.scrollTo({top: m.y, left: m.x, behavior: 'auto'})
-    
+    // window.scrollTo({top: m.y, left: m.x, behavior: 'auto'})
+    window.scrollBy({
+      top: m.y - m.y0,
+      left: m.x - m.x0,
+      behavior: 'auto'
+    }) 
     window.requestAnimationFrame(() => {
       window.addEventListener('scroll', scrollListener)
     })

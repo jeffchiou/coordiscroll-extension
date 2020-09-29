@@ -1,12 +1,14 @@
 # CoordiScroll Extension
 
-Synchronize scrolling across tabs in your browser!
+Synchronize scrolling across tabs in your browser! WIP.
 
 ## TODO
 
-- [ ] control which tabs are synchronized
 - [ ] desync and resync
 - [ ] hotkeys
-- [ ] user interface
+- [ ] better UI
 - [ ] duplicate tab in new window
+- [ ] control which tabs are synchronized
+- [x] relative synchronization
 - [x] simple synchronization
+- [x] simple UI

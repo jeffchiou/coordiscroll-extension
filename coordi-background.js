@@ -4,8 +4,8 @@ let State = {
   syncedTabs: new Set(),
   x: [],
   y: [],
-  dx: [],
-  dy: []
+  x0: [],
+  y0: []
 }
 // let panelPort = browser.runtime.connect({name: "bg-to-panel"})
 
@@ -34,17 +34,28 @@ function connected(p) {
       State.tabId.set(currentTab, State.tabId.size)
     }
     ind = State.tabId.get(currentTab)
+    State.x0[ind] = State.x[ind]
+    State.y0[ind] = State.y[ind]
     State.x[ind] = m.x
     State.y[ind] = m.y
     
-    // console.log(State.y)
+    // console.log(State.y, State.y0)
     // console.log(State.tabId)
     for (let key of State.tabId.keys()) {
       if (key != currentTab) {
         ports[key].postMessage({
           x: m.x,
-          y: m.y
+          y: m.y,
+          x0: State.x0[ind],
+          y0: State.y0[ind]
         })
+        // Ignore state of follower windows to prevent scroll jumps
+        // not sure if I should keep track of it or not though.
+        followInd = State.tabId.get(key)
+        State.x0[followInd] = undefined //= State.x[followInd]
+        State.y0[followInd] = undefined //= State.y[followInd]
+        State.x[followInd] = undefined //+= State.x[ind] - State.x0[ind]
+        State.y[followInd] = undefined //+= State.y[ind] - State.y0[ind]
       }
     }
 
