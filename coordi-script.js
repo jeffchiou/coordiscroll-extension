@@ -1,6 +1,6 @@
-let myPort = browser.runtime.connect({name:"port-from-cs"})
+let myPort = browser.runtime.connect({name:"content-script"})
 
-myPort.postMessage({greeting: "Hello from content script"})
+
 myPort.onMessage.addListener(function(m) {
 
   window.requestAnimationFrame(() => {    

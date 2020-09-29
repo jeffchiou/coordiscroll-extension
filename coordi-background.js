@@ -7,10 +7,25 @@ let State = {
   dx: [],
   dy: []
 }
-
+// let panelPort = browser.runtime.connect({name: "bg-to-panel"})
 
 function connected(p) { 
-
+  console.log(p.name)
+  if (p.name == "panel-to-bg") {
+    p.onMessage.addListener(function(m) {
+      switch (m.f) {
+        case "test":
+          p.postMessage({f: m.f, msg: "test successful"})
+          break
+        case "getTabsInGroup":  
+          p.postMessage({f: m.f, msg: State.tabId})
+          break
+        default:
+          p.postMessage({f: m.f, msg: "didn't understand"})
+      }
+    })
+    return
+  }
   let currentTab = p.sender.tab.id
   ports[currentTab] = p
 
@@ -38,6 +53,7 @@ function connected(p) {
 }
 
 browser.runtime.onConnect.addListener(connected)
+
 
 // browser.browserAction.onClicked.addListener(function() {
 //   ports.forEach( p => {
